@@ -1,0 +1,12 @@
+{
+  "name": "arrl_test",
+  "version": "0.0.1",
+  "description": "Example app to use results of ARRL sample question parser",
+  "dependencies": {
+      "feedparser"      : "0.16.x"
+    , "async"		: "0.2.x"
+    , "request"		: "2.33.x"
+    , "express"    	: "3.4.x" 
+    , "cheerio"    	: "0.13.x"
+  }
+}    
