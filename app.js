@@ -20,7 +20,7 @@ function set_tech(req, res, next) {
   res.stash = res.stash || {};
   res.stash.type = 'tech';
 
-  res.stash.exam = require('./' + res.stash.type + '.json');
+  res.stash.exam = require('./data/' + res.stash.type + '.json');
 
   return next();
 }
@@ -29,7 +29,7 @@ function init_exam(req, res, next) {
   res.stash = res.stash || {};
   res.stash.type = req.params.type;
  
-  res.stash.exam = require('./' + res.stash.type + '.json'); 
+  res.stash.exam = require('./data/' + res.stash.type + '.json'); 
 
   return next();
 }
