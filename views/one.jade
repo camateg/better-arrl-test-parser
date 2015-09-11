@@ -1,0 +1,80 @@
+doctype html
+html(lang="en")
+	head
+		title= 'VE Question ' + data.question
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+		link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+		script(src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js")
+		script(src="//code.jquery.com/jquery-1.10.2.min.js")
+
+		style(type='text/css').
+			.item { width: 96%; margin: 2% 2% 0px 2%; border: 1px solid gray;}
+			#target, .row { width: 100%; }
+
+		- var ep = '/' + data.class + '/' + data.question + '/json'
+
+		script(type='text/javascript').
+			var ep = "#{ep}"
+			function refresh() {
+				var type = $('#type').val();
+				$.getJSON(ep, function(data) {
+					$('#question-header').html('');
+					var template = $('#row').html();
+					var rendered = Mustache.render(template, {row: data});
+
+					$('#question-header').append(rendered);
+
+					$('#answer').html('');
+
+					var a_template = $('#answer-block').html();
+					var a_rendered = Mustache.render(a_template, {row: data});
+
+					$('#answer').append(a_rendered);
+
+					var answer = data.answers;
+
+					$('#questions').html('');
+
+					for (a in answer) {	
+						var q_template = $('#question-block').html();
+						var q_rendered = Mustache.render(q_template, {answer: answer[a]});
+						$('#questions').append(q_rendered);
+					} 
+					console.log(data);
+				});
+			}
+
+
+			$(document).ready(function() {
+				refresh();
+				$('#type').change(function(e) {
+					$('#answer').fadeOut(0);
+					$('#show-answer').fadeIn(0);
+					refresh();
+				});
+
+				$(document).on('click','#show-answer', function(e) {
+				$('#show-answer').fadeOut(0);
+					$('#answer').fadeIn(200);
+				});
+					
+			});
+
+		script(id="row" type="xtmpl-mustache")
+			div(class="question-header").
+				{{ row.question_no }} - {{ row.question }}
+
+		script(id="question-block" type="xtmpl-mustache")
+			div(class="question").
+				{{ answer.letter }} - {{ answer.answer }}
+
+		script(id="answer-block" type="xtmpl-mustache")
+			{{ row.correct_ans }}
+
+	body
+		div(id="target")
+			div(class="well" id="question-header")
+			div(class="well" id="questions")
+			button(id="show-answer").
+				Show Answer
+			div(class="well" style="display: none;" id="answer")
