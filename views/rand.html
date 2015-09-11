@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>VE Questions</title>
+		<title>Random VE Question</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
@@ -45,6 +45,8 @@
 			$(document).ready(function() {
 				refresh();
 				$('#type').change(function(e) {
+					$('#answer').fadeOut(0);
+					$('#show-answer').fadeIn(0);
 					refresh();
 				});
 
@@ -67,10 +69,10 @@
 		<script id="answer-block" type="xtmpl-mustache">
 				{{ row.correct_ans }}
 		</script>
-
 	</head>
 
 	<body>
+		<span style="display:none;" id="ep"></span>
 		<select id="type">
 			<option>tech</option>
 			<option>general</option>

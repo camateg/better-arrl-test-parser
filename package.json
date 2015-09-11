@@ -8,5 +8,7 @@
     , "request"		: "2.33.x"
     , "express"    	: "3.4.x" 
     , "cheerio"    	: "0.13.x"
+    , "path"		: "x"
+    , "jade"		: "x"
   }
 }    
