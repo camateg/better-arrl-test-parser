@@ -18,7 +18,6 @@ app.get('/:type/:q/json', init_exam, specific_test, json_out);
 
 app.get('/', set_tech, random_test, out);
 
-app.get('/:type/rand', init_exam, random_test, out);
 app.get('/:type/:q', init_exam, specific_test, single_out);
 
 function randomInt(min, max) {
@@ -93,13 +92,7 @@ function json_out(req, res) {
 function out(req, res) {
   res.stash = res.stash || {};
 
-  fs.readFile('views/rand.html', function(err, data) {
-    if (err) {
-      console.log(err);
-    }
-    res.write(data);
-    res.end();
-  }); 
+  res.render('rand', {});
 }
 
 function single_out(req, res) {
