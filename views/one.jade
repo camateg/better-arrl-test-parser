@@ -9,6 +9,8 @@ html(lang="en")
 
 		style(type='text/css').
 			.item { width: 96%; margin: 2% 2% 0px 2%; border: 1px solid gray;}
+			#fig { text-align: center; }
+			#fig > img { width: 50% }	
 			#target, .row { width: 100%; }
 
 		- var ep = '/' + data.class + '/' + data.question + '/json'
@@ -34,6 +36,10 @@ html(lang="en")
 					var answer = data.answers;
 
 					$('#questions').html('');
+
+					if(data.fig !== '00') {
+						$('#fig').html('<img src="/' + data.fig + '.jpg" />');
+					}	
 
 					for (a in answer) {	
 						var q_template = $('#question-block').html();
@@ -74,6 +80,7 @@ html(lang="en")
 	body
 		div(id="target")
 			div(class="well" id="question-header")
+			div(id="fig")
 			div(class="well" id="questions")
 			button(id="show-answer").
 				Show Answer

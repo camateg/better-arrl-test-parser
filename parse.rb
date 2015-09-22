@@ -1,4 +1,5 @@
 require 'json'
+require 'open-uri'
 
 type = ARGV[0]
 
@@ -16,6 +17,8 @@ lines.each_with_index do |line,ct|
 	end
 end
 
+dl_figs = []
+
 question_pos.each do |pos|
 	q_tmp = lines[pos]
 	q_tmp_out = /(\w\d\w\d+)\s\((\w)\)/.match q_tmp
@@ -30,6 +33,7 @@ question_pos.each do |pos|
 	if /figure\s\w\d+/i.match tmp['question']
 		fig_rgx = /figure\s(\w\d+\-?\d?)/i.match tmp['question']
 		fig = fig_rgx[1]
+		dl_figs.push fig
 	end
 
 	tmp['fig'] = fig
@@ -51,5 +55,16 @@ question_pos.each do |pos|
 
 	questions.push tmp
 end
+
+dl_figs.each do |fig|
+	begin
+		open('./public/' + fig + '.jpg', 'wb') do |file|
+			file << open('http://ncvec.org/downloads/' + fig + '.jpg').read
+		end
+	rescue
+		'File not found for ' + fig
+	end
+end
+
 
 puts questions.to_json
